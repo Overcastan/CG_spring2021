@@ -139,16 +139,44 @@ add_executable(corona_figure
 		common/shader.cpp
 		common/shader.hpp
 		)
+
 target_link_libraries(corona_figure
 		${ALL_LIBS}
 		-static-libstdc++ -static-libgcc
 		-static
 		-lwinpthread
 		)
+
 # Xcode and Visual working directories
 set_target_properties(corona_figure PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/corona_figure/")
 create_target_launcher(corona_figure WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/corona_figure/")
 
+# HW2 First Person Shooter
+add_executable(FPS
+		FPS/Shooter.cpp
+		common/shader.cpp
+		common/shader.hpp
+		common/controls.cpp
+		common/controls.hpp
+		common/texture.cpp
+		common/texture.hpp
+		common/objloader.cpp
+		common/objloader.hpp
+		FPS/Enemy.cpp
+		FPS/Enemy.h
+		FPS/Projectile.cpp
+		FPS/Projectile.h
+		)
+target_link_libraries(FPS
+		${ALL_LIBS}
+		-static-libstdc++ -static-libgcc
+		-static
+		-lwinpthread
+		)
+
+# Xcode and Visual working directories
+set_target_properties(FPS PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/FPS/")
+create_target_launcher(FPS WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/FPS/")
 
 
 SOURCE_GROUP(common REGULAR_EXPRESSION ".*/common/.*" )
@@ -179,6 +207,10 @@ add_custom_command(
 add_custom_command(
 		TARGET corona_figure POST_BUILD
 		COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/corona_figure${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/corona_figure/"
+)
+add_custom_command(
+		TARGET FPS POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/FPS${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/FPS/"
 )
 
 
